@@ -5,7 +5,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const summarizeNote = async (req, res) => {
+export const aiProcess = async (req, res) => {
   try {
     const { content } = req.body;
 
@@ -17,13 +17,18 @@ export const summarizeNote = async (req, res) => {
 
     const response = await client.responses.create({
       model: "gpt-5-mini",
-      input: `You are an assistant that summarizes my notes in JSON. 
-       Output must have:
-      - "summary": a short paragraph (1-2 sentences)
-      - "key_points": an array of 3 concise bullet points
+      input: `You are a smart learning assistant. The user just wrote a note. 
 
-      Do NOT include anything else, do NOT write explanations.
-        Note: ${content}
+     Analyze the note and return the following in JSON format **ONLY** (no explanations):
+
+      "summary": a short summary of the note.
+      "key_points": an array of 3 concise bullet points that capture the most important ideas.
+      "next_topics": an array of 3 suggestions or actions the user could do next to improve, learn more, or do better based on the note.
+      "tags": an array of 3-5 relevant tags or keywords for the note.
+
+        Return **valid JSON only**.  
+        Here is the note: 
+${content}
       `,
     });
 
