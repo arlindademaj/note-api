@@ -8,7 +8,7 @@ import {
 } from "../controllers/notes.controller.js";
 import { asyncHandler } from "../utils/asyncHandler.middleware.js";
 import { validateNote } from "../validators/note.validator.js";
-import { summarizeNote } from "../controllers/aiController.js";
+import { aiProcess } from "../controllers/aiController.js";
 
 const notesRouter = Router();
 
@@ -22,6 +22,6 @@ notesRouter.delete("/:id", asyncHandler(deleteNoteById));
 
 notesRouter.put("/:id", asyncHandler(updateNoteById));
 
-notesRouter.post("/summarize", summarizeNote);
+notesRouter.post("/ai-process", aiProcess);
 
 export default notesRouter;
